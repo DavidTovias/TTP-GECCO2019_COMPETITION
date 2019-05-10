@@ -1,0 +1,1 @@
+plot "resultsTest4.txt"  using 1:2 pt 7 ps 4 t "280 ciudades, 1395 objetos"

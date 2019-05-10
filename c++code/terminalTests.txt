@@ -1,0 +1,17 @@
+ejemplo=test-example-n4-clean.txt
+instancia1=a280-n279-clean.txt
+instancia2=a280-n1395-clean.txt
+instancia3=a280-n2790-clean.txt
+instancia4=fnl4461-n4460-clean.txt
+instancia5=test-4461-n22300-clean.txt
+instancia6=fnl4461-n44600-clean.txt
+instancia7=pla33810-n33809-clean.txt
+instancia8=pla33810-n169045-clean.txt
+instancia9=pla33810-n338090-clean.txt
+optEjemplo=test-example-n4-opt.txt
+opt280=a280.opt.tour-clean.txt
+opt280=a280.opt.tour_new.txt
+opt4461=fnl4461.opt.tour-clean.txt
+opt33810=pla33810.opt-clean.tour
+plan1395=optPlan_280-1395_clean.txt
+plan279=optPlan_280-279_clean.txt
