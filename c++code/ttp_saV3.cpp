@@ -1,7 +1,9 @@
 //#include <boost/random.hpp>
+#include <random>
 #include <iostream>
 #include <ctime>
 #include <cstdint>
+#include <stdlib.h>
 
 #include <fstream>
 #include <math.h>
