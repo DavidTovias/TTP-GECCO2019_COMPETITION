@@ -144,14 +144,14 @@ void permutation::vertex_insert(int ncities, int* &pi)
 
 }
 
+
 double permutation::randreal(void)
-{   
-    
+{       
     std::random_device rd;
-    std::mt19937 gen(rd());
+    std::mt19937_64 gen(rd());
     //std::uniform_int_distribution<unsigned long long> dis;
     double result = ((double) gen());
-    result /= (double) std::mt19937::max();
+    result /= (double) std::mt19937_64::max();
     //result /= boost::random::mt19937::max();
     
     return (result);
