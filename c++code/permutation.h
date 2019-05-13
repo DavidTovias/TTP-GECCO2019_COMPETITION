@@ -1,3 +1,4 @@
+#include <random>
 #include<iostream>
 //#include <boost/random.hpp>
 #include <ctime>
@@ -7,8 +8,8 @@
 #include <math.h>
 #include <vector>
 #include <climits>
-#include <random>
 
+using namespace std;
 class permutation
 {
 private:
@@ -19,17 +20,27 @@ public:
     ~permutation();
 
     // random generator
-    std::time_t now = std::time(0);
+    //std::time_t now = std::time(0);
     //boost::random::mt19937 gen{static_cast<std::uint32_t>(now)};
-    std::mt19937 gen{static_cast<std::uint32_t>(now)};
+    //std::mt19937 gen{static_cast<std::uint32_t>(now)};
+
+    /* Initialise. Do this once (not for every
+    random number). */
+    //std::random_device rd;
+    //std::mt19937_64 gen(rd());
+
+    /* This is where you define the number generator for unsigned long long: */
+    //std::uniform_int_distribution<unsigned long long> dis;
+
 
     //Methods
     int * init_permutation(int);
-    int * gen_permutation(int*, int);
+    //int * gen_permutation(int*, int);
     void block_reverse(int, int*&);
     void vertex_insert(int, int*&);
 
     double randreal(void);
+    //long long randreal(void);
     int rndint(int, int);
 
 };
@@ -56,7 +67,7 @@ int * permutation::init_permutation(int n){
 }
 
 
-int * permutation::gen_permutation(int *perm, int n){
+/*int * permutation::gen_permutation(int *perm, int n){
     // Fisher-Yates shuffling algorithm    
     for (int i = n-1; i > 0; --i){
         //generate a random number [0, n-1]
@@ -67,7 +78,7 @@ int * permutation::gen_permutation(int *perm, int n){
         perm[j] = temp;
     }
     return perm;
-}
+}*/
 
 // Block reverse ASA-GS
 void permutation::block_reverse(int ncities, int* &pi)
@@ -134,18 +145,24 @@ void permutation::vertex_insert(int ncities, int* &pi)
 }
 
 double permutation::randreal(void)
-{
-    double result = ((double) this->gen());
-    result /= std::mt19937::max();
+{   
+    
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    //std::uniform_int_distribution<unsigned long long> dis;
+    double result = ((double) gen());
+    result /= (double) std::mt19937::max();
     //result /= boost::random::mt19937::max();
-
+    
     return (result);
 }
 
 
 
 int permutation::rndint(int lo, int hi){
+    
     return (int)(lo + randreal() * (hi - lo + 1));
+    //return (lo + dis(gen) % hi);
 }
 
 
