@@ -1,35 +1,19 @@
-#include<iostream>
-#include<boost/random.hpp>
-#include <ctime>
-
-using namespace std;
-
-//Prototypes
-double randreal(void);
-int rndint(int, int);
-
-
-std::time_t now = std::time(0);
-boost::random::mt19937 gen{static_cast<std::uint32_t>(now)};
-
-int main(int argc, char const *argv[])
+#include <random>
+#include <iostream>
+int main()
 {
-    int r = rndint(1,2);
-    cout << "r " << r << endl;
+  /* Initialise. Do this once (not for every
+     random number). */
+  std::random_device rd;
+  std::mt19937_64 gen(rd());
 
-    
-    return 0;
+  /* This is where you define the number generator for unsigned long long: */
+  std::uniform_int_distribution<unsigned long long> dis;
+
+  /* A few random numbers: */    
+  for (int n=0; n<10; ++n)
+    std::cout << dis(gen) << ' ';
+  std::cout << std::endl;
+  return 0;
 }
 
-
-double randreal(void)
-{
-    double result = ( (double) gen() );
-    result /= boost::random::mt19937::max();
-    
-    return (result);
-}
-
-int rndint(int lo, int hi){
-    return (int)(lo + randreal() * (hi - lo + 1));
-}
