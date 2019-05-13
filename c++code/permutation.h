@@ -1,5 +1,5 @@
 #include<iostream>
-#include <boost/random.hpp>
+//#include <boost/random.hpp>
 #include <ctime>
 #include <cstdint>
 
@@ -7,6 +7,7 @@
 #include <math.h>
 #include <vector>
 #include <climits>
+#include <random>
 
 class permutation
 {
@@ -19,7 +20,8 @@ public:
 
     // random generator
     std::time_t now = std::time(0);
-    boost::random::mt19937 gen{static_cast<std::uint32_t>(now)};
+    //boost::random::mt19937 gen{static_cast<std::uint32_t>(now)};
+    std::mt19937 gen{static_cast<std::uint32_t>(now)};
 
     //Methods
     int * init_permutation(int);
@@ -70,6 +72,7 @@ int * permutation::gen_permutation(int *perm, int n){
 // Block reverse ASA-GS
 void permutation::block_reverse(int ncities, int* &pi)
 {
+
     int i, j, _min, _max;
     do{
         i = rndint(0,ncities-1);
@@ -81,7 +84,7 @@ void permutation::block_reverse(int ncities, int* &pi)
     
     i = _min + 1;
     j = _max - 1;
-
+    
     int tam = _max - _min - 1;
     int * aux = new int[tam];
 
@@ -133,7 +136,8 @@ void permutation::vertex_insert(int ncities, int* &pi)
 double permutation::randreal(void)
 {
     double result = ((double) this->gen());
-    result /= boost::random::mt19937::max();
+    result /= std::mt19937::max();
+    //result /= boost::random::mt19937::max();
 
     return (result);
 }

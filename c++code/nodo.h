@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
-#include <boost/random.hpp>
+//#include <boost/random.hpp>
+#include <random>
 
 
 using namespace std;
@@ -55,7 +56,8 @@ Nodo::Nodo(int max_cities, int max_items)
     this->nitems = max_items;
 
     this->profit = 0;
-    time = numeric_limits<double>::max();
+    //time = numeric_limits<double>::max();
+    time = 1797690.0;
     tour = new int[max_cities];
     packing = new short int[max_items];
 
@@ -77,7 +79,8 @@ Nodo::Nodo(int max_cities, int max_items)
 Nodo::Nodo(const Nodo &n2)
 {
     this->profit = n2.profit;
-    time = numeric_limits<double>::max();
+    //time = numeric_limits<double>::max();
+    time = 1797690.0;
     tour = new int[MAXCITIES];
     packing = new short int[MAXITEMS];  
 }
@@ -85,7 +88,7 @@ Nodo::Nodo(const Nodo &n2)
 Nodo::Nodo()
 {
     profit = 0;
-    time = numeric_limits<double>::max();    
+    //time = numeric_limits<double>::max();    
     tour = new int[MAXCITIES];
     packing = new short int[MAXITEMS];  
 }

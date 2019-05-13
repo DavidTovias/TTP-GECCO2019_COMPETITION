@@ -1,7 +1,7 @@
-/*Try to implement ASA-GR*/
+
 
 #include<iostream>
-#include <boost/random.hpp>
+//#include <boost/random.hpp>
 #include <ctime>
 #include <cstdint>
 
@@ -199,6 +199,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<short int> optimal_plan, i
     Nodo * aux = new Nodo(ncities, nitems);
     int nonD = 0, dominates = 0, dominated = 0, t_count = 0;
     int greedy = 0;
+    int BL_Z = 90;
     while(t_current > 5.0){ // Temperature  
 
         // generate new solution
@@ -209,12 +210,16 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<short int> optimal_plan, i
             perMutation->vertex_insert(ncities, this->pi);
         }
         
-       
+        
         for (int j = 0; j < nitems; ++j){ // Random packing plan
             prob = perMutation->rndint(0,10); // = 0;
             z[j] = (short int) 0; //rndint(0,1);
             if (prob >= 10){ z[j] = 1;}
         }
+
+        //if(BL_Z == 100){ BL_Z = 90; }
+        //BL_Z++;
+        
         
         
         // evaluation of function
@@ -273,7 +278,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<short int> optimal_plan, i
             
             if(this->G >= this->t_greedy){
                 cout << "G is complete!\n";
-                
+                //exit(0);
                 //prob = (int) perMutation->rndint(0,10); // probability;
                 
                 

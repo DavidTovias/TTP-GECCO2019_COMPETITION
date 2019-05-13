@@ -1,7 +1,8 @@
 /* function evaluation class*/
 
 #include<iostream>
-#include <boost/random.hpp>
+//#include <boost/random.hpp>
+#include <random>
 #include <ctime>
 #include <cstdint>
 
@@ -74,7 +75,8 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
         // if the maximum capacity constraint is reached
         if (this->weight > capacity) {
             //cout << "L --- R: Penalizado..\n";
-            time0 = numeric_limits<double>::max();
+            //time0 = numeric_limits<double>::max(); // Valor máximo de un double: 1.79769e+308
+            time0 = 1797690.0;
             time1 = time0;
             profit = 0.0; // -1
             break;
@@ -103,7 +105,8 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
         // if the maximum capacity constraint is reached
         if (this->weight > capacity) {
             //cout << "R --- L: Penalizado..\n";
-            time0 = numeric_limits<double>::max();
+            //time0 = numeric_limits<double>::max();
+            time0 = 1797690.0;
             time1 = time0;
             profit = 0.0; // -1
             break;
