@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 //#include <boost/random.hpp>
-#include <random>
+//#include <random>
 
 
 using namespace std;
@@ -83,6 +83,16 @@ Nodo::Nodo(const Nodo &n2)
     time = 1797690.0;
     tour = new int[MAXCITIES];
     packing = new short int[MAXITEMS];  
+
+    for(int i = 0; i < ncities; i++)
+    {
+        tour[i] = i;
+    }
+
+    for(int i = 0; i < nitems; i++)
+    {
+        packing[i] = 0;
+    }
 }
 
 Nodo::Nodo()
@@ -91,6 +101,16 @@ Nodo::Nodo()
     //time = numeric_limits<double>::max();    
     tour = new int[MAXCITIES];
     packing = new short int[MAXITEMS];  
+
+    for(int i = 0; i < ncities; i++)
+    {
+        tour[i] = i;
+    }
+
+    for(int i = 0; i < nitems; i++)
+    {
+        packing[i] = 0;
+    }
 }
 
 Nodo::~Nodo()
@@ -100,8 +120,8 @@ Nodo::~Nodo()
 
 // show this-node tour
 void Nodo::showTour(){
-    int i;
-    for(i = 0; i < this->ncities; i++)
+    //int i;
+    for(int i = 0; i < this->ncities; i++)
     {
         cout << this->tour[i] << " ";
     }
@@ -241,6 +261,12 @@ void Nodo::printAll(){
 
     cout << "Tour: ";
     this->showTour();
+    /*for (int i = 0; i < 2; i++)
+    {
+        this->tour[i] = 0;
+        cout << this->tour[i] << " ";
+    }*/
+    
     cout << "  Plan:  ";
     this->showPacking();
     cout << "\tTime: " << this->time << "\tProfit: " << this->profit;

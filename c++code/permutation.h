@@ -42,16 +42,65 @@ public:
     double randreal(void);
     //long long randreal(void);
     int rndint(int, int);
+    //std::mt19937_64 gen();
+
+    vector<short int> knapsack_dp(vector<unsigned long>, vector<unsigned long>, unsigned long, int);
+
+
 
 };
 
+
 permutation::permutation()
 {
-
+    
 }
 
 permutation::~permutation()
 {
+}
+
+vector<short int> permutation::knapsack_dp(vector<unsigned long> wt, vector<unsigned long> val, unsigned long W, int n)
+{
+    unsigned long i, w;
+    unsigned long K[n+1][W+1]; 
+  
+    // Build table K[][] in bottom up manner 
+    for (i = 0; i <= n; i++) 
+    { 
+       for (w = 0; w <= W; w++) 
+        { 
+            if (i==0 || w==0) 
+               K[i][w] = 0; 
+            else if (wt[i-1] <= w) 
+                 K[i][w] = max(val[i-1] + K[i-1][w-wt[i-1]],  K[i-1][w]); 
+            else
+                 K[i][w] = K[i-1][w]; 
+        }
+   }
+
+
+    vector<short int> z; //size n, last indez is the maximum z[n+1]
+    unsigned long p = n-1; // indice del vector z
+
+    //initialize z
+    for(i=0; i<n; i++){
+        z.push_back(0);
+    }
+
+    unsigned long ki=W; // para el último elemento
+    for(i=n; i>0; i--){
+        if(K[i][ki] == K[i-1][ki]){ // Si es igual al de arriba
+            p--;
+            continue;
+        }else{            
+            z[p] = 1;
+            ki -= wt[i-1];
+            p--;
+        }
+    }
+
+    return z;
 }
 
 

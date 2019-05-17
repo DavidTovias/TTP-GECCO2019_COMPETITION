@@ -2,7 +2,7 @@
 
 #include<iostream>
 //#include <boost/random.hpp>
-#include <random>
+//#include <random>
 #include <ctime>
 #include <cstdint>
 
@@ -74,7 +74,9 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
         }
         // if the maximum capacity constraint is reached
         if (this->weight > capacity) {
-            //cout << "L --- R: Penalizado..\n";
+            cout << "L --- R: Penalizado..\n";
+            cout << "weight: " << this->weight << endl;
+            exit(0);
             //time0 = numeric_limits<double>::max(); // Valor máximo de un double: 1.79769e+308
             time0 = 1797690.0;
             time1 = time0;
@@ -104,7 +106,9 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
 
         // if the maximum capacity constraint is reached
         if (this->weight > capacity) {
-            //cout << "R --- L: Penalizado..\n";
+            cout << "R --- L: Penalizado..\n";
+            cout << "weight: " << this->weight << endl;
+            exit(0);
             //time0 = numeric_limits<double>::max();
             time0 = 1797690.0;
             time1 = time0;
@@ -115,7 +119,8 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
         
     }
 
-    
+    //cout << "weight: " << this->weight << endl;
+            
     // profit and packing
     aux->setPacking(z);
     aux->profit = profit;
@@ -130,7 +135,7 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
         aux->time = time1;
         //cout << "inverse tour\n";
         aux->setTour(aux->getInverseTour(pi));
-        cout << "Tour inverso\n";
+        //cout << "Tour inverso\n";
     }
 
     //cout << "\n final evaluateFX \n";

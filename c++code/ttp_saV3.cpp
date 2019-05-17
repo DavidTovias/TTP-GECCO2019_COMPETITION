@@ -17,8 +17,10 @@
 #include "nonDominated.h"
 #include "readFile.h"
 #include "eval.h"
+#include "permutation.h"
+//#include "time_TTPSolver.h"
 #include "simulatedAnnealing.h"
-
+#include "writeInFile.h"
 
 using namespace std;
 
@@ -86,10 +88,10 @@ int main(int argc, char const *argv[])
     
 
     vector<short int> optimal_plan = fileData->getOptimalPlan();
-    for (std::vector<short int>::iterator it = optimal_plan.begin() ; it != optimal_plan.end(); ++it)
+    /*for (std::vector<short int>::iterator it = optimal_plan.begin() ; it != optimal_plan.end(); ++it)
     {
         //cout << *it << " ";
-    }
+    }*/
 
     // Print all items
 
@@ -103,11 +105,17 @@ int main(int argc, char const *argv[])
 
     for(int i = 0; i < ParetoOptimal.size(); i++)
     {
-        //ParetoOptimal[i]->printAll();    
-        /*cout << "Time: " << */cout << ParetoOptimal[i]->time << "\t" << "-"<<ParetoOptimal[i]->profit << endl;
+        if(ParetoOptimal[i]->time == 2613 || ParetoOptimal[i]->profit == 0){
+            cout << ParetoOptimal[i]->time << "\tCondicion" << ""<<ParetoOptimal[i]->profit << endl;
+            ParetoOptimal[i]->printAll();
+        }
+        
+        /*cout << "Time: " << */cout << ParetoOptimal[i]->time << "\t" << ""<<ParetoOptimal[i]->profit << endl;
+        //cout << "\n" << i << "# " << ParetoOptimal.size() << endl;
     }
 
     cout << "\nSoluciones no dominadas: " << ParetoOptimal.size() << endl;
+    
     
     
     /*for(size_t i = 0; i < 3; i++)
@@ -136,6 +144,7 @@ int main(int argc, char const *argv[])
     delete [] distanceMatrix;
     delete [] _items;
     delete sa;
+    //delete write;
 
 
     return 0;
