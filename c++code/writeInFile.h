@@ -37,25 +37,39 @@ void writeInFile::write_in_file(vector<Nodo*> COP)
     {
         cout << "En for\n";
         for(int j = 0; j < this->ncities; j++){
-            fs << COP[i]->tour[j] << " ";
-            //fs << "0 ";
+            if(j!=ncities-1){
+                fs << COP[i]->tour[j] << " ";
+            }else{
+                fs << COP[i]->tour[j];
+            }
         }
-        fs << "\n\n";
-        /*fs << "\n\n";
+        fs << "\n";
         for(int j = 0; j < this->nitems; j++){
-            fs << COP[i]->packing[j] << " ";
+            if (j != nitems-1)
+            {
+                fs << COP[i]->packing[j] << " ";
+            }else{
+                fs << COP[i]->packing[j];
+            }
         }
-        fs << "\n";*/
+        if(i != COP.size()-1){
+            fs << "\n\n";
+        }
     }
-       
+    fs << "\n\n";
     fs.close(); // close file
     
-   /* cout << "En write_in_file COP\n";
+    cout << "En write_in_file COP\n";
     ofstream tp("COP.txt");
     for (int i = 0; i < COP.size(); i++)
-    {
-        tp << COP[i]->time << " " << COP[i]->profit << "\n";
+    {   
+        if(i != COP.size()-1){
+            tp << COP[i]->time << " " << COP[i]->profit << "\n";
+        }else{
+            tp << COP[i]->time << " " << COP[i]->profit;
+        }
+        
     }
     tp << "\n";
-    tp.close();*/
+    tp.close();
 }

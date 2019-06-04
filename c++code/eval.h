@@ -32,7 +32,7 @@ public:
     ~eval();
 
     //Methods
-    Nodo* evaluateFX(Nodo*&, int *, short int *, int, int, int, float *, double, double, unsigned long, unsigned long**, vector<vector<int> >);
+    Nodo* evaluateFX(Nodo*&, vector<int>, vector<short int>, int, int, int, float *, double, double, unsigned long, unsigned long**, vector<vector<int> >);
 };
 
 eval::eval(int ncities, int nitems)
@@ -48,12 +48,16 @@ eval::~eval()
 {
 }
 
-Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int nitems, int capacity, float *distances, double time0, double time1 ,unsigned long profit, unsigned long **items, vector<vector<int> > items_in_city)
+Nodo* eval::evaluateFX(Nodo*& solution,vector<int> pi, vector<short int>z, int ncities, int nitems, int capacity, float *distances, double time0, double time1 ,unsigned long profit, unsigned long **items, vector<vector<int> > items_in_city)
 {
 
     //Nodo *aux = new Nodo(ncities,nitems);
     if(VEC.size() == 1){ VEC.erase(VEC.begin()); }
 
+    /*if(pi.size() != 280){ 
+        cout << "Diferente a 280! - eval" << endl;
+        exit(0);
+    }*/
     // the values that are evaluated in this function
     this->weight = 0;
     // attributes in the beginning of the tour
@@ -73,10 +77,10 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
             
         }
         // if the maximum capacity constraint is reached
-        if (this->weight > capacity) {
-            cout << "L --- R: Penalizado..\n";
-            cout << "weight: " << this->weight << endl;
-            exit(0);
+        if (this->weight > (unsigned long)capacity) {
+            //cout << "L --- R: Penalizado..\n";
+            //cout << "weight: " << this->weight << endl;
+            //exit(0);
             //time0 = numeric_limits<double>::max(); // Valor máximo de un double: 1.79769e+308
             time0 = 1797690.0;
             time1 = time0;
@@ -84,6 +88,8 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
             break;
         }        
         
+        //cout << "pi size: " << pi.size() << endl;
+        //exit(0);
         // update the speed accordingly
         double speed = max_speed - ((double) weight / capacity) * (max_speed - min_speed);
         if (i == ncities-1)
@@ -105,10 +111,10 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
         time1 += (double) distances[pi[i] * ncities + pi[i - 1]] / speed;
 
         // if the maximum capacity constraint is reached
-        if (this->weight > capacity) {
-            cout << "R --- L: Penalizado..\n";
-            cout << "weight: " << this->weight << endl;
-            exit(0);
+        if (this->weight > (unsigned long)capacity) {
+            //cout << "R --- L: Penalizado..\n";
+            //cout << "weight: " << this->weight << endl;
+            //exit(0);
             //time0 = numeric_limits<double>::max();
             time0 = 1797690.0;
             time1 = time0;
@@ -139,10 +145,13 @@ Nodo* eval::evaluateFX(Nodo*& solution,int *pi, short int *z, int ncities, int n
     }
 
     //cout << "\n final evaluateFX \n";
-    solution = solution->getAll(aux,n2); 
+    solution = solution->getAll(aux); 
     //solution = aux;
 
     
     return solution;
     
 }
+
+
+//  g++ -Wall -g write.cpp -o write

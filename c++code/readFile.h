@@ -59,12 +59,12 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
     inFile >> this->nitems;
     inFile >> this->capacity;
 
-    for (size_t i = 0; i < this->ncities; ++i)
+    for (int i = 0; i < this->ncities; ++i)
     {
         inFile >> this->coor_cities[i][0] >> this->coor_cities[i][1];
         this->items_in_city.push_back(std::vector<int>());
     }
-    for (size_t i = 0; i < this->nitems; ++i)
+    for (int i = 0; i < this->nitems; ++i)
     {
         inFile >> this->items[i][0]; //Profit
         inFile >> this->items[i][1]; //weight
@@ -81,7 +81,7 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
     this->filename = filename;
     //inFile.open("test-example-n4-clean.txt");
     inFile.open(opt_tour);
-    for (size_t i = 0; i < this->ncities; ++i)
+    for (int i = 0; i < this->ncities; ++i)
     {
         inFile >> this->opt_tour[i];
         this->opt_tour[i]--;
@@ -92,11 +92,11 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
 
     int k = 0;
     cout << "imprimiendo items\n";
-    for(size_t i = 0; i < this->nitems; i++)
+    for(int i = 0; i < this->nitems; i++)
     {
-        for(size_t j = 0; j < 3; j++)
+        for(int j = 0; j < 3; j++)
         {
-            cout << items[i][j] << " ";
+            //cout << items[i][j] << " ";
             k++;
         }
         cout << endl;
@@ -116,12 +116,12 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
     inFile >> nBestItems;
     // Asignando memoria dinamicamente
     this->opt_plan = new short int*[nBestItems];
-    for (size_t i = 0; i < nBestItems; i++)
+    for (int i = 0; i < nBestItems; i++)
     {
         this->opt_plan[i] = new short int[2];
     }
     
-    for (size_t i = 0; i < nBestItems; ++i)
+    for (int i = 0; i < nBestItems; ++i)
     {
         inFile >> this->opt_plan[i][0];
         optimal_plan.push_back(this->opt_plan[i][0]);
@@ -141,10 +141,10 @@ readFile::~readFile()
 float * readFile::getDistances(){
 
     
-    for (size_t i = 0; i < this->ncities; ++i)
+    for (int i = 0; i < this->ncities; ++i)
     {
         this->distances[i*this->ncities+i] = 0.0;
-        for (size_t j = i+1; j < this->ncities; ++j){
+        for (int j = i+1; j < this->ncities; ++j){
             this->distances[(i*this->ncities)+j] = ceil(sqrt((this->coor_cities[i][0]-this->coor_cities[j][0])*(this->coor_cities[i][0]-this->coor_cities[j][0]) + (this->coor_cities[i][1]-this->coor_cities[j][1])*(this->coor_cities[i][1]-this->coor_cities[j][1])));
             this->distances[(j*this->ncities)+i] = this->distances[(i*this->ncities)+j];
         }
@@ -172,11 +172,11 @@ vector<vector<int> > readFile::getItems_in_city(){
 
 unsigned long ** readFile::getItems(){
     const int tam = (int) this->nitems;
-    const int c = 3;
+    //const int c = 3;
     unsigned long ** ptr = new unsigned long*[tam];
-    for(size_t i = 0; i < this->nitems; i++){
+    for(int i = 0; i < this->nitems; i++){
         ptr[i] = new unsigned long[3];
-        for(size_t j = 0; j < 3; j++){
+        for(int j = 0; j < 3; j++){
             ptr[i][j] = this->items[i][j];
         }
     }

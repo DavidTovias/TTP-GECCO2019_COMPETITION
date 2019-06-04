@@ -16,6 +16,7 @@ private:
     
 public:
 
+    vector<int> aux;
     permutation();
     ~permutation();
 
@@ -36,8 +37,12 @@ public:
     //Methods
     int * init_permutation(int);
     //int * gen_permutation(int*, int);
-    void block_reverse(int, int*&);
-    void vertex_insert(int, int*&);
+    //void block_reverse(int, int*&);
+    vector<int> block_reverse(int, vector<int>);
+    //void block_reverse(int, vector<int>&);
+    //void vertex_insert(int, int*&);
+    //void vertex_insert(int, vector<int>&);
+    vector<int> vertex_insert(int, vector<int>);
 
     double randreal(void);
     //long long randreal(void);
@@ -54,6 +59,7 @@ public:
 permutation::permutation()
 {
     
+    
 }
 
 permutation::~permutation()
@@ -66,7 +72,7 @@ vector<short int> permutation::knapsack_dp(vector<unsigned long> wt, vector<unsi
     unsigned long K[n+1][W+1]; 
   
     // Build table K[][] in bottom up manner 
-    for (i = 0; i <= n; i++) 
+    for (i = 0; i <= (unsigned long)n; i++) 
     { 
        for (w = 0; w <= W; w++) 
         { 
@@ -84,7 +90,7 @@ vector<short int> permutation::knapsack_dp(vector<unsigned long> wt, vector<unsi
     unsigned long p = n-1; // indice del vector z
 
     //initialize z
-    for(i=0; i<n; i++){
+    for(i=0; i<(unsigned long)n; i++){
         z.push_back(0);
     }
 
@@ -130,7 +136,7 @@ int * permutation::init_permutation(int n){
 }*/
 
 // Block reverse ASA-GS
-void permutation::block_reverse(int ncities, int* &pi)
+vector<int> permutation::block_reverse(int ncities, vector<int> pi)
 {
 
     int i, j, _min, _max;
@@ -146,11 +152,13 @@ void permutation::block_reverse(int ncities, int* &pi)
     j = _max - 1;
     
     int tam = _max - _min - 1;
-    int * aux = new int[tam];
+    //int * aux = new int[tam];
+    
 
     // asignar los valores a aux (reverse)
     for(int ind = 0/*, rev = j*/; ind < tam; ind++/* , rev--*/){
-        aux[ind] = pi[j];//pi[rev];
+        //aux[ind] = pi[j];//pi[rev];
+        aux.push_back(pi[j]);
         j--;
         //cout << "aux[i]: " << aux[ind] << " ";
     }
@@ -164,12 +172,15 @@ void permutation::block_reverse(int ncities, int* &pi)
         i++;
     }
 
-    delete[] aux;
+    //delete[] aux;
+    aux.clear();
+    
+    return pi;
 
 }
 
 
-void permutation::vertex_insert(int ncities, int* &pi)
+vector<int> permutation::vertex_insert(int ncities, vector<int> pi)
 {
     int i, j, _min, _max, tmp;
     // Select random cities
@@ -189,7 +200,9 @@ void permutation::vertex_insert(int ncities, int* &pi)
     }
 
     pi[_min] = tmp;
-    
+
+
+    return pi;
 
 }
 
@@ -213,42 +226,3 @@ int permutation::rndint(int lo, int hi){
     return (int)(lo + randreal() * (hi - lo + 1));
     //return (lo + dis(gen) % hi);
 }
-
-
-
-
-
-
-/*
-
-    int i, j, _min, _max;
-    do{
-        i = rndint(0,ncities-1);
-        j = rndint(0,ncities-1);
-    }while(i == j);
-    
-    _min = min(i,j);
-    _max = max(i,j);
-    
-    i = _min + 1;
-    j = _max - 1;
-
-    int tam = _max - _min - 1;
-    int * aux = new int[tam];
-
-    // asignar los valores a aux (reverse)
-    for(int ind = 0, rev = j; ind < tam; ind++, rev--){
-        aux[ind] = pi[rev];
-        //cout << "aux[i]: " << aux[ind] << " ";
-    }
-    //cout << endl;
-    
-    // Asignar a pi los valores invertidos de aux
-    for(int ind= 0, t= i; ind<tam ;ind++,t++)
-    {
-        pi[t] = aux[ind];
-    }
-
-    delete[] aux;
-
-*/

@@ -18,7 +18,7 @@
 #include "readFile.h"
 #include "eval.h"
 #include "permutation.h"
-//#include "time_TTPSolver.h"
+
 #include "simulatedAnnealing.h"
 #include "writeInFile.h"
 
@@ -42,10 +42,10 @@ int main(int argc, char const *argv[])
     int * optimal_Tour;
     optimal_Tour = fileData->getOptimalTour();
     cout << "\n optimal tour \n";
-    for(size_t i = 0; i < ncities; i++)
+    /*for(int i = 0; i < ncities; i++)
     {
         cout << optimal_Tour[i] << " ";
-    }
+    }*/
     
     // Know the number of non-dominated solutions
     switch(ncities){
@@ -103,20 +103,33 @@ int main(int argc, char const *argv[])
     cout << "\n Pareto Optimal - LISTA COMPLETA\n";
     
 
-    for(int i = 0; i < ParetoOptimal.size(); i++)
+    for(size_t i = 0; i < ParetoOptimal.size(); i++)
     {
-        if(ParetoOptimal[i]->time == 2613 || ParetoOptimal[i]->profit == 0){
-            cout << ParetoOptimal[i]->time << "\tCondicion" << ""<<ParetoOptimal[i]->profit << endl;
-            ParetoOptimal[i]->printAll();
+        cout << ParetoOptimal[i]->tour.size() << "  " << ParetoOptimal[i]->packing.size() << endl;
+        if(ParetoOptimal[i]->tour.size() != 280){ 
+        cout << "Diferente a 280 - main! " << endl;
+        //exit(0);
         }
-        
-        /*cout << "Time: " << */cout << ParetoOptimal[i]->time << "\t" << ""<<ParetoOptimal[i]->profit << endl;
-        //cout << "\n" << i << "# " << ParetoOptimal.size() << endl;
     }
 
-    cout << "\nSoluciones no dominadas: " << ParetoOptimal.size() << endl;
+    cout << "\nSoluciones no dominadas: " << ParetoOptimal.size() << endl << endl;
+    
+    for(int i = 0; i < ParetoOptimal.size(); i++)
+    {
+        ParetoOptimal[i]->printAll();
+    }
+
+
+    cout << "\n";
+    for(int i = 0; i < ParetoOptimal.size(); i++)
+    {
+        cout << ParetoOptimal[i]->time << " " << ParetoOptimal[i]->profit << endl;
+    }
     
     
+    writeInFile *write = new writeInFile(ncities, nitems);
+
+    write->write_in_file(ParetoOptimal);
     
     /*for(size_t i = 0; i < 3; i++)
     {

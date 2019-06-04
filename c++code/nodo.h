@@ -15,9 +15,14 @@ class Nodo{
         Nodo(int max_cities, int max_items);
         Nodo(const Nodo &);
         ~Nodo();
-        int* tour;
-        int* pi_aux;
-        short int * packing;
+        //int* tour;
+        //int* pi_aux;
+        vector<int> tour;
+        vector<int> pi_aux;
+        
+        //short int * packing;
+        vector<short int> packing;
+
         double time;
         unsigned long profit;
 
@@ -30,17 +35,27 @@ class Nodo{
         int ban = 0;
 
         // Methods
-        void setTour(int*);
-        void setPacking(short int*);
-        int* getInverseTour(int*);
+        //void setTour(int*);
+        void setTour(vector<int>);
+
+        //void setPacking(short int*);
+        void setPacking(vector<short int>);
+
+        //int* getInverseTour(int*);
+        vector<int> getInverseTour(vector<int>);
+
         void showTour();
         void showPacking();
         bool equalsTour(Nodo*);
         bool equalsPacking(Nodo*);
-        int * getTour();
-        short int * getPacking();
+        // int * getTour();
+        vector<int> getTour();
+        
+        //short int * getPacking();
+        vector<short int> getPacking();
+
         int compareSolution(Nodo*);
-        Nodo * getAll(Nodo *, Nodo*);
+        Nodo * getAll(Nodo *);
         void printAll();
 
         void initialize();
@@ -58,20 +73,24 @@ Nodo::Nodo(int max_cities, int max_items)
     this->profit = 0;
     //time = numeric_limits<double>::max();
     time = 1797690.0;
-    tour = new int[max_cities];
-    packing = new short int[max_items];
+    //tour = new int[max_cities];
+    
+    //packing = new short int[max_items];
 
     for(int i = 0; i < ncities; i++)
     {
-        tour[i] = i;
+        this->tour.push_back(i); // initialize 
+        this->pi_aux.push_back(i); // initialize 
+
     }
 
     for(int i = 0; i < nitems; i++)
     {
-        packing[i] = 0;
+        //packing[i] = 0;
+        this->packing.push_back(0);
     }
 
-    this->pi_aux = (int *) malloc(this->ncities*sizeof(int));
+    //this->pi_aux = (int *) malloc(this->ncities*sizeof(int));
     
 }
 
@@ -81,14 +100,17 @@ Nodo::Nodo(const Nodo &n2)
     this->profit = n2.profit;
     //time = numeric_limits<double>::max();
     time = 1797690.0;
-    tour = new int[MAXCITIES];
-    packing = new short int[MAXITEMS];  
+    //tour = new int[MAXCITIES];
+    //packing = new short int[MAXITEMS];  
 
     for(int i = 0; i < ncities; i++)
     {
-        tour[i] = i;
+        this->tour.push_back(i);
     }
-
+    
+    cout << "En otro constructor\n";
+    exit(0);
+    
     for(int i = 0; i < nitems; i++)
     {
         packing[i] = 0;
@@ -99,18 +121,21 @@ Nodo::Nodo()
 {
     profit = 0;
     //time = numeric_limits<double>::max();    
-    tour = new int[MAXCITIES];
-    packing = new short int[MAXITEMS];  
+    //tour = new int[MAXCITIES];
+    //packing = new short int[MAXITEMS];  
 
     for(int i = 0; i < ncities; i++)
     {
-        tour[i] = i;
+        this->tour.push_back(i);
     }
 
     for(int i = 0; i < nitems; i++)
     {
         packing[i] = 0;
     }
+
+    cout << "En otro constructor\n";
+    exit(0);
 }
 
 Nodo::~Nodo()
@@ -121,6 +146,8 @@ Nodo::~Nodo()
 // show this-node tour
 void Nodo::showTour(){
     //int i;
+    //cout << "size of tour: " << this->tour.size() << endl;
+    
     for(int i = 0; i < this->ncities; i++)
     {
         cout << this->tour[i] << " ";
@@ -138,6 +165,10 @@ void Nodo::showPacking(){
 
 // true: different, false: equals
 bool Nodo::equalsTour(Nodo *n){
+    /*if(n->tour.size() != 280){
+        cout << "Diferente a 280 - Nodo\n";
+        exit(0);
+    }*/
     for(int i = 0; i < this->ncities; i++)
     {
         if(this->tour[i] != n->tour[i]){ // Different
@@ -160,20 +191,20 @@ bool Nodo::equalsPacking(Nodo *n){
     return true;
 }
 
-void Nodo::setTour(int* _pi){
+void Nodo::setTour(vector<int> _pi){
     for(int i = 0; i < this->ncities; i++){
         this->tour[i] = _pi[i];
     }
 }
 
-void Nodo::setPacking(short int* _z){
+void Nodo::setPacking(vector<short int> _z){
     for(int i = 0; i < this->nitems; i++){
         this->packing[i] = _z[i];
     }
 }
 
 
-int * Nodo::getInverseTour(int *pi){
+vector<int> Nodo::getInverseTour(vector<int> pi){
     pi_aux[0] = pi[0];
     for(int i = this->ncities-1, j=1; i > 0; i--,j++){
         pi_aux[j] = pi[i];
@@ -182,11 +213,11 @@ int * Nodo::getInverseTour(int *pi){
     return pi_aux;
 }
 
-int * Nodo::getTour(){
+vector<int> Nodo::getTour(){
     return this->tour;
 }
 
-short int * Nodo::getPacking(){
+vector<short int> Nodo::getPacking(){
     return this->packing;
 }
 
@@ -230,7 +261,7 @@ void Nodo::initialize(){
     this->ban = 19;
 }
 
-Nodo* Nodo::getAll(Nodo *n, Nodo* au){
+Nodo* Nodo::getAll(Nodo *n){
     Nodo *aux = new Nodo(ncities, nitems);
 
     aux->setTour(n->getTour());

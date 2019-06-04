@@ -33,10 +33,15 @@ nonDominated::~nonDominated()
 void nonDominated::addSolution(Nodo* solution)
 {
     int add = 1;
+    
     // add solution
-    for(int i = 0; i < SOL.size(); i++)
+    for(size_t i = 0; i < SOL.size(); i++)
     {           
         if(solution->compareSolution(SOL[i]) == 1){
+            /*if(solution->tour.size() != 280){
+                cout << "Diferente a 280! - nonDominated\n";
+                exit(0);
+            }*/
             
             /*if(SOL[i]->profit == 42036){
                 //SOL[i]->printAll();
@@ -63,7 +68,7 @@ void nonDominated::addAll(Nodo* solution)
 {
     int add = 1;
     // add solution
-    for(int i = 0; i < AllSol.size(); i++)
+    for(size_t i = 0; i < AllSol.size(); i++)
     {   
         if(solution->time == AllSol[i]->time && solution->profit == AllSol[i]->profit){
             if(solution->equalsTour(AllSol[i])){
