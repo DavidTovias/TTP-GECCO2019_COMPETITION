@@ -87,7 +87,7 @@ int main(int argc, char const *argv[])
     }*/
     
 
-    vector<short int> optimal_plan = fileData->getOptimalPlan();
+    vector<int> optimal_plan = fileData->getOptimalPlan();
     /*for (std::vector<short int>::iterator it = optimal_plan.begin() ; it != optimal_plan.end(); ++it)
     {
         //cout << *it << " ";
