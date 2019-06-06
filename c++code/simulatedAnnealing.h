@@ -160,7 +160,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     optPlan_and_tour->printAll();
     
     cout << "\n optPlan_and_tour\n";
-    exit(0);
+    //exit(0);
     
 
     /*vector<Nodo*> OPTIMAL_PLAN_TOUR;
