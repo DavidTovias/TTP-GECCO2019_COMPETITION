@@ -27,7 +27,7 @@ private:
     unsigned long items[MAXITEMS][3];
 
     vector<vector<int> > items_in_city;
-    vector<short int> optimal_plan;
+    vector<int> optimal_plan;
     float *distances;
 
 public:
@@ -44,7 +44,7 @@ public:
 
     int * getOptimalTour();
     unsigned long ** getItems();
-    vector<short int> getOptimalPlan();
+    vector<int> getOptimalPlan();
     vector<vector<int> > getItems_in_city();
 
 };
@@ -110,25 +110,38 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
 
 
     // Read optimal plan ************************
-    short int nBestItems;    
+    int nBestItems;    
 
     inFile.open(opt_knp);
     inFile >> nBestItems;
+    
+    
     // Asignando memoria dinamicamente
-    this->opt_plan = new short int*[nBestItems];
-    for (int i = 0; i < nBestItems; i++)
+    //this->opt_plan = new short int*[nBestItems];
+
+    /*for (int i = 0; i < nBestItems; i++)
     {
         this->opt_plan[i] = new short int[2];
-    }
+    }*/
     
     for (int i = 0; i < nBestItems; ++i)
     {
-        inFile >> this->opt_plan[i][0];
-        optimal_plan.push_back(this->opt_plan[i][0]);
+        //inFile >> this->opt_plan[i][0];
+        //optimal_plan.push_back(this->opt_plan[i][0]);
+        optimal_plan.push_back(-1);
+        inFile >> optimal_plan[i];
     }
     inFile.close();
     
+
+    for (size_t i = 0; i < optimal_plan.size(); i++)
+    {       
+       cout << optimal_plan[i] << "\n";
+    }
+    
     cout << "\nnBestItems: " << nBestItems << endl;
+
+    //exit(0);
 
 
 }
@@ -189,6 +202,6 @@ int * readFile::getOptimalTour(){
     return this->opt_tour;
 }
 
-vector<short int> readFile::getOptimalPlan(){
+vector<int> readFile::getOptimalPlan(){
     return this->optimal_plan;
 }

@@ -49,7 +49,7 @@ public:
     ~simulatedAnnealing();
 
     // sa method
-    vector<Nodo*> sa_algorithm(vector<short int>, int*,int, int, int, float *, unsigned long **, vector<vector<int> >);
+    vector<Nodo*> sa_algorithm(vector<int>, int*,int, int, int, float *, unsigned long **, vector<vector<int> >);
     
 };
 
@@ -85,7 +85,7 @@ simulatedAnnealing::~simulatedAnnealing()
 }
 
 
-vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<short int> optimal_plan, int* optimal_tour,int ncities, int nitems, int capacity, float *distances, unsigned long **items, vector<vector<int> > items_in_city)
+vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* optimal_tour,int ncities, int nitems, int capacity, float *distances, unsigned long **items, vector<vector<int> > items_in_city)
 {    
     //this->z = new short int[nitems];
     for (int i = 0; i < nitems; i++)
@@ -134,11 +134,11 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<short int> optimal_plan, i
     Nodo *optPlan_and_tour = new Nodo(ncities, nitems);
     
     cout << "pi -----------------------\n ";
-    for (int i = 0; i < ncities; i++)
+    /*for (int i = 0; i < ncities; i++)
     {
         cout << this->pi[i] << " ";
     }
-    cout << " -----------------------lal\n\n ";
+    cout << " -----------------------lal\n\n ";*/
     
     cout << "seg\n";
     // select the best items
@@ -149,7 +149,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<short int> optimal_plan, i
             for (int k = 0; k < optimal_plan.size(); k++){ // checar todos los objetos
                 if(*it == optimal_plan[k]){
                     optPlan[optimal_plan[k]] = 1;
-                    cout << *it << " ";
+                    //cout << *it << " ";
                 }
             }
         }
@@ -159,10 +159,11 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<short int> optimal_plan, i
     cout << "\nprint all\n";
     optPlan_and_tour->printAll();
     
-    cout << "\n opt_time_plan\n";
+    cout << "\n optPlan_and_tour\n";
+    exit(0);
     
 
-    vector<Nodo*> OPTIMAL_PLAN_TOUR;
+    /*vector<Nodo*> OPTIMAL_PLAN_TOUR;
     //OPTIMAL_PLAN_TOUR = this->sa_timeSolver(optimal_plan, optimal_tour, ncities, nitems, capacity, distances, items, items_in_city);
 
     for (int i = 0; i < OPTIMAL_PLAN_TOUR.size(); i++)
@@ -170,7 +171,10 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<short int> optimal_plan, i
         cout << OPTIMAL_PLAN_TOUR[i]->time << "  " << OPTIMAL_PLAN_TOUR[i]->profit << endl;
     }
     
+    
     cout << "soluciones: " << OPTIMAL_PLAN_TOUR.size() << endl;
+
+    */
     
     //exit(0);
     sol->addSolution(optPlan_and_tour); // add to COP
