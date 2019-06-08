@@ -302,15 +302,15 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             z[i] = 0;
         }
 
-        for (size_t i = 0; i < nitems; i++)
+        /*for (size_t i = 0; i < nitems; i++)
         {
             mutate = perMutation->rndint(1,10);
             if(mutate == 10){
                 z[i] = (short int) 1;
             }
-        }
+        }*/
 
-        /*
+        
         for (int i = ncities-1; i >= ncities-(ncities/BL_CITIES); i--) // Seleccionar ciudades aleatoriamente
         {   
             //cout << "\nPeso_total:::: " << peso_total << endl;
@@ -361,7 +361,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             
         }
         
-        */
+        
 
         
         // evaluation of function
