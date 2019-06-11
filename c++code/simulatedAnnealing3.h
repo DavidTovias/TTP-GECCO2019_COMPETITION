@@ -272,8 +272,8 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     Nodo *GreedyBest = new Nodo(ncities, nitems); // greedy solution    
     //Nodo * aux = new Nodo(ncities, nitems);
     int nonD = 0, dominates = 0, dominated = 0, t_count = 0;
-    int BL_Z = 0;
-    int BL_CITIES = 2;
+    
+    
     //int city1, city2, min_city, max_city; 
     vector<unsigned long> peso;
     vector<unsigned long> ganancia;
@@ -283,10 +283,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     unsigned long peso_total = 0;
     //int c = 0;
     while(t_current > 5.0){ // Temperature  
-        /*if(pi.size() != 280){ 
-            cout << "Diferente a 280! - sa " << endl;
-            exit(0);
-        }*/
+
         peso_total = 0;
         // generate new solution
         mutate = perMutation->rndint(1,10);
@@ -304,67 +301,47 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
 
         fill(begin(z),end(z),0);
 
-        /*for (size_t i = 0; i < nitems; i++)
-        {
-            mutate = perMutation->rndint(1,10);
-            if(mutate == 10){
-                z[i] = (short int) 1;
-            }
-        }*/
-
         
-        for (int i = ncities-1; i >= ncities-(ncities/BL_CITIES); i--) // Seleccionar ciudades aleatoriamente
+        for (int i = ncities-1; i >= ncities-(ncities/6); i--) // Seleccionar ciudades aleatoriamente
         {   
-            //cout << "\nPeso_total:::: " << peso_total << endl;
-            for (std::vector<int>::iterator it = items_in_city[pi[i]].begin() ; it != items_in_city[pi[i]].end(); ++it)
-            {
-                ganancia.push_back(items[*it][0]);
-                peso.push_back(items[*it][1]);
-                peso_total += items[*it][1];
+            mutate = perMutation->rndint(1,10);
+            if(mutate > 8){ // 20%
+                for (std::vector<int>::iterator it = items_in_city[pi[i]].begin() ; it != items_in_city[pi[i]].end(); ++it)
+                {
+                    ganancia.push_back(items[*it][0]);
+                    peso.push_back(items[*it][1]);
+                    peso_total += items[*it][1];
 
-                objetos.push_back((short int)*it);
-            }
+                    objetos.push_back((short int)*it);
+                }
+                
+                if(peso_total > (unsigned long)capacity){  // Se viola la restricción de peso
+                    peso_total = 0;
+                    // Se eliminan todos los elementos
+                    peso.clear();
+                    ganancia.clear();
+                    objetos.clear();
+                    knp.clear();
+                    break; 
+                }
             
-            //cout << "\n";
-            //for (int j = 0; j < peso.size(); j++)
-            //{
-            //    cout << ganancia[j] << "   " << peso[j] << endl;
-            //}
-            
-            //cout << "\nPeso_total:: " << peso_total << endl;
-            if(peso_total > (unsigned long)capacity){  // Se viola la restricción de peso
-                //cout << "RESSSSS\n";
-                //cout << "peso total: " << peso_total << "  capacidad: " << capacity << endl;
-                peso_total = 0;
+
+                knp = perMutation->knapsack_dp(peso, ganancia, 2000UL, peso.size());
+
+                for (int j = 0; j < knp.size(); j++)
+                {   
+                    if(knp[j] == 1){
+                        z[objetos[j]] = (short int)1;
+                    }
+                }
+                
                 // Se eliminan todos los elementos
                 peso.clear();
                 ganancia.clear();
                 objetos.clear();
                 knp.clear();
-                break; 
-            }
-        
-
-            knp = perMutation->knapsack_dp(peso, ganancia, 2000UL, peso.size());
-            //cout << "\nSIZE KNP: " << knp.size() << endl;
-
-            for (int j = 0; j < knp.size(); j++)
-            {   
-                if(knp[j] == 1){
-                    z[objetos[j]] = (short int)1;
-                }
-            }
-            
-            // Se eliminan todos los elementos
-            peso.clear();
-            ganancia.clear();
-            objetos.clear();
-            knp.clear();
-            
-        }
-        
-        if(BL_CITIES == 6){ BL_CITIES = 2;}
-        else{ BL_CITIES += 2; }
+            }// end if
+        }// end for
         
         // evaluation of function
         solutionPrime = evaluate->evaluateFX(solutionPrime, this->pi, z, ncities, nitems, capacity, distances, time0, time1,profit, items, items_in_city);
@@ -463,22 +440,12 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             solution = sol->SOL[takeSol];
         }
 
-        /*if(sol->AllSol.size() > 1){
-            takeSol = perMutation->rndint(0, sol->AllSol.size()-1);
-            //solution = solution->getAll(sol->SOL[takeSol], solution);
-            solution = sol->AllSol[takeSol];
-        } */  
-        
-        
 
         for(int i = 0; i < ncities; i++)
         {
             this->pi[i] = solution->tour[i];
         }
-        
-        /*if(this->pi.size() != 280){
-            cout << "this->pi Diferente a 280 - Sa\n";
-        }*/
+
         
         t_current *= t_cool;//0.8;// update T
         t_count++;
@@ -509,14 +476,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     delete perMutation;
     delete evaluate;
 
-    /*cout << "\n All Solutions \n\n";
-    for(int i = 0; i< sol->AllSol.size(); i++){
-        cout << "time: " << sol->AllSol[i]->time << "  profit: " << sol->AllSol[i]->profit << endl;
-    }
 
-    cout << "TOTAL: " << sol->AllSol.size() << endl;
-
-    exit(0);*/
     
     return sol->solutions();
 
