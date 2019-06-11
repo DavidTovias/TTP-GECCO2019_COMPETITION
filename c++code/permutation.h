@@ -1,6 +1,5 @@
 #include <random>
 #include<iostream>
-//#include <boost/random.hpp>
 #include <ctime>
 #include <cstdint>
 
@@ -20,38 +19,18 @@ public:
     permutation();
     ~permutation();
 
-    // random generator
-    //std::time_t now = std::time(0);
-    //boost::random::mt19937 gen{static_cast<std::uint32_t>(now)};
-    //std::mt19937 gen{static_cast<std::uint32_t>(now)};
-
-    /* Initialise. Do this once (not for every
-    random number). */
-    //std::random_device rd;
-    //std::mt19937_64 gen(rd());
-
-    /* This is where you define the number generator for unsigned long long: */
-    //std::uniform_int_distribution<unsigned long long> dis;
-
 
     //Methods
     int * init_permutation(int);
-    //int * gen_permutation(int*, int);
-    //void block_reverse(int, int*&);
+
     vector<int> block_reverse(int, vector<int>);
-    //void block_reverse(int, vector<int>&);
-    //void vertex_insert(int, int*&);
-    //void vertex_insert(int, vector<int>&);
+    
     vector<int> vertex_insert(int, vector<int>);
 
     double randreal(void);
-    //long long randreal(void);
     int rndint(int, int);
-    //std::mt19937_64 gen();
 
     vector<short int> knapsack_dp(vector<unsigned long>, vector<unsigned long>, unsigned long, int);
-
-
 
 };
 
@@ -117,23 +96,9 @@ int * permutation::init_permutation(int n){
     for (int i = 0; i < n; ++i)
         perm[i] = i;
 
-    //gen_permutation(perm, n);
     return perm;
 }
 
-
-/*int * permutation::gen_permutation(int *perm, int n){
-    // Fisher-Yates shuffling algorithm    
-    for (int i = n-1; i > 0; --i){
-        //generate a random number [0, n-1]
-        int j = 1 + this->gen() % i;
-        //swap the last element with element at random index
-        int temp = perm[i];
-        perm[i] = perm[j];
-        perm[j] = temp;
-    }
-    return perm;
-}*/
 
 // Block reverse ASA-GS
 vector<int> permutation::block_reverse(int ncities, vector<int> pi)
@@ -152,27 +117,22 @@ vector<int> permutation::block_reverse(int ncities, vector<int> pi)
     j = _max - 1;
     
     int tam = _max - _min - 1;
-    //int * aux = new int[tam];
     
 
     // asignar los valores a aux (reverse)
-    for(int ind = 0/*, rev = j*/; ind < tam; ind++/* , rev--*/){
-        //aux[ind] = pi[j];//pi[rev];
+    for(int ind = 0; ind < tam; ind++){
         aux.push_back(pi[j]);
         j--;
-        //cout << "aux[i]: " << aux[ind] << " ";
     }
-    //cout << endl;
+
     
     // Asignar a pi los valores invertidos de aux
-    for(int ind= 0/*, t= i*/; ind<tam ;ind++/* , t++*/)
+    for(int ind= 0; ind<tam ;ind++)
     {
-        /*pi[t]*/
         pi[i] = aux[ind];
         i++;
     }
 
-    //delete[] aux;
     aux.clear();
     
     return pi;
@@ -193,7 +153,6 @@ vector<int> permutation::vertex_insert(int ncities, vector<int> pi)
     _max = max(i,j);
 
     tmp = pi[_max];
-    //cout << "min: " << _min << "   Max: " << _max << endl;
 
     for(i = _max; i > _min; i--){
         pi[i] = pi[i-1];

@@ -38,18 +38,6 @@ void nonDominated::addSolution(Nodo* solution)
     for(size_t i = 0; i < SOL.size(); i++)
     {           
         if(solution->compareSolution(SOL[i]) == 1){
-            /*if(solution->tour.size() != 280){
-                cout << "Diferente a 280! - nonDominated\n";
-                exit(0);
-            }*/
-            
-            /*if(SOL[i]->profit == 42036){
-                //SOL[i]->printAll();
-                //cout << "\n\n";
-                //solution->printAll();
-                //cout << "compare: " << solution->compareSolution(SOL[i]);
-                //exit(0);
-            }*/
             SOL.erase(SOL.begin()+i);
         }
         if(solution->compareSolution(SOL[i]) == -1){

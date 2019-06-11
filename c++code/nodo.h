@@ -13,7 +13,6 @@ class Nodo{
     public:
         Nodo(); // Constructor
         Nodo(int max_cities, int max_items);
-        Nodo(const Nodo &);
         ~Nodo();
         //int* tour;
         //int* pi_aux;
@@ -65,17 +64,12 @@ class Nodo{
 
 Nodo::Nodo(int max_cities, int max_items)
 {
-    //this->ban = 0;
 
     this->ncities = max_cities;
     this->nitems = max_items;
 
     this->profit = 0;
-    //time = numeric_limits<double>::max();
     time = 1797690.0;
-    //tour = new int[max_cities];
-    
-    //packing = new short int[max_items];
 
     for(int i = 0; i < ncities; i++)
     {
@@ -86,57 +80,11 @@ Nodo::Nodo(int max_cities, int max_items)
 
     for(int i = 0; i < nitems; i++)
     {
-        //packing[i] = 0;
         this->packing.push_back(0);
     }
-
-    //this->pi_aux = (int *) malloc(this->ncities*sizeof(int));
     
 }
 
-
-Nodo::Nodo(const Nodo &n2)
-{
-    this->profit = n2.profit;
-    //time = numeric_limits<double>::max();
-    time = 1797690.0;
-    //tour = new int[MAXCITIES];
-    //packing = new short int[MAXITEMS];  
-
-    for(int i = 0; i < ncities; i++)
-    {
-        this->tour.push_back(i);
-    }
-    
-    cout << "En otro constructor\n";
-    exit(0);
-    
-    for(int i = 0; i < nitems; i++)
-    {
-        packing[i] = 0;
-    }
-}
-
-Nodo::Nodo()
-{
-    profit = 0;
-    //time = numeric_limits<double>::max();    
-    //tour = new int[MAXCITIES];
-    //packing = new short int[MAXITEMS];  
-
-    for(int i = 0; i < ncities; i++)
-    {
-        this->tour.push_back(i);
-    }
-
-    for(int i = 0; i < nitems; i++)
-    {
-        packing[i] = 0;
-    }
-
-    cout << "En otro constructor\n";
-    exit(0);
-}
 
 Nodo::~Nodo()
 {
@@ -145,8 +93,6 @@ Nodo::~Nodo()
 
 // show this-node tour
 void Nodo::showTour(){
-    //int i;
-    //cout << "size of tour: " << this->tour.size() << endl;
     
     for(int i = 0; i < this->ncities; i++)
     {
@@ -165,10 +111,7 @@ void Nodo::showPacking(){
 
 // true: different, false: equals
 bool Nodo::equalsTour(Nodo *n){
-    /*if(n->tour.size() != 280){
-        cout << "Diferente a 280 - Nodo\n";
-        exit(0);
-    }*/
+
     for(int i = 0; i < this->ncities; i++)
     {
         if(this->tour[i] != n->tour[i]){ // Different
@@ -270,33 +213,12 @@ Nodo* Nodo::getAll(Nodo *n){
     aux->time = n->time;
 
     return aux;
-    /*if(vec.size() == 1){
-        vec.erase(vec.begin());
-    }
-    vec.push_back(n);
-    cout << "size: " << vec.size() << endl;
-    //return vec[0];
-
-    cout << ".........................\n";
-
-    cout << "aux->time: " << aux->time << "  aux->profit: " << aux->profit << "\n";
-    cout << "vec[0]->time: " << vec[0]->time << "  vec[0]->profit: " << vec[0]->profit << "\n";
-
-    cout << ".........................\n";
-
-    return aux;*/
-    
 }
 
 void Nodo::printAll(){
 
     cout << "Tour: ";
     this->showTour();
-    /*for (int i = 0; i < 2; i++)
-    {
-        this->tour[i] = 0;
-        cout << this->tour[i] << " ";
-    }*/
     
     cout << "  Plan:  ";
     this->showPacking();
