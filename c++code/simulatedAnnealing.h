@@ -57,7 +57,7 @@ public:
 //Constructor
 simulatedAnnealing::simulatedAnnealing(int ncities)
 {
-    this->t_start = 10000;
+    this->t_start = 500;
     this->t_end = 0.0025;
     this->t_current = this->t_start;
     this->alpha = 1600;
@@ -175,7 +175,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             for (int k = 0; k < optimal_plan_size; k++){ // checar todos los objetos
                 if(*it == optimal_plan[k]){
                     z[*it] = 1;
-                    cout << *it << " ";
+                    //cout << *it << " ";
                 }   
             }
         }
@@ -225,7 +225,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     Nodo *solution = new Nodo(ncities, nitems); // solution Node (init solution)
     cout << " despues de Nodo \n";
     solution = evaluate->evaluateFX(solution, this->pi, z, ncities, nitems, capacity, distances, time0, time1,profit, items, items_in_city);
-    solution->printAll();
+    //solution->printAll();
     
     
     
@@ -326,8 +326,8 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             
         }
         
-        if(BL_CITIES == 6){ BL_CITIES = 2;}
-        else{ BL_CITIES += 2; }
+        if(BL_CITIES == 6){ BL_CITIES = 1;}
+        else{ BL_CITIES += 1; }
         
         // evaluation of function
         solutionPrime = evaluate->evaluateFX(solutionPrime, this->pi, z, ncities, nitems, capacity, distances, time0, time1,profit, items, items_in_city);
@@ -380,7 +380,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             }
             
             if(this->G >= this->t_greedy){
-                cout << "G is complete! ---------------------------------------------------\n";
+                //cout << "G is complete! ---------------------------------------------------\n";
                 //exit(0);
                 //prob = (int) perMutation->rndint(0,10); // probability;
                 
@@ -445,7 +445,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
         
         t_current *= t_cool;//0.8;// update T
         t_count++;
-        cout << "T_current: " << t_current << endl;
+        //cout << "T_current: " << t_current << endl;
 
 
 

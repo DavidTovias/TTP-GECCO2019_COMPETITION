@@ -103,7 +103,7 @@ int main(int argc, char const *argv[])
     cout << "\n Pareto Optimal - LISTA COMPLETA\n";
     
 
-    for(size_t i = 0; i < ParetoOptimal.size(); i++)
+    /*for(size_t i = 0; i < ParetoOptimal.size(); i++)
     {
         cout << ParetoOptimal[i]->tour.size() << "  " << ParetoOptimal[i]->packing.size() << endl;
         if(ParetoOptimal[i]->tour.size() != 280){ 
@@ -111,13 +111,15 @@ int main(int argc, char const *argv[])
         //exit(0);
         }
     }
+    */
 
     cout << "\nSoluciones no dominadas: " << ParetoOptimal.size() << endl << endl;
     
-    for(int i = 0; i < ParetoOptimal.size(); i++)
+    /*for(int i = 0; i < ParetoOptimal.size(); i++)
     {
         ParetoOptimal[i]->printAll();
     }
+    */
 
 
     cout << "\n";

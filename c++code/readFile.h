@@ -91,7 +91,7 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
     cout<<"succesfully read! file2"<<endl;
 
     int k = 0;
-    cout << "imprimiendo items\n";
+    /*cout << "imprimiendo items\n";
     for(int i = 0; i < this->nitems; i++)
     {
         for(int j = 0; j < 3; j++)
@@ -103,6 +103,7 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
     }
     cout << endl;
     cout << "K: " << k << endl;
+    */
 
     
     this->distances = (float *) malloc (this->ncities*this->ncities*sizeof(float));
@@ -134,11 +135,11 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
     inFile.close();
     
 
-    for (size_t i = 0; i < optimal_plan.size(); i++)
+    /*for (size_t i = 0; i < optimal_plan.size(); i++)
     {       
        cout << optimal_plan[i] << "\n";
     }
-    
+    */
     cout << "\nnBestItems: " << nBestItems << endl;
 
     //exit(0);
