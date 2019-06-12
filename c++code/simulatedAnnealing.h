@@ -4,6 +4,7 @@
 //#include <boost/random.hpp>
 #include <ctime>
 #include <cstdint>
+#include<iomanip>
 
 #include <fstream>
 #include <math.h>
@@ -80,23 +81,21 @@ simulatedAnnealing::~simulatedAnnealing()
 
 vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* optimal_tour,int ncities, int nitems, int capacity, float *distances, unsigned long **items, vector<vector<int> > items_in_city)
 {    
-    //this->z = new short int[nitems];
-    for (int i = 0; i < nitems; i++)
-    {
-        //z[i] = 0;
+
+    // Se inicializa z con -1
+    for (int i = 0; i < nitems; i++){
         z.push_back(0);
     }
 
+    // Se inicializa pi con -1
     for (int i = 0; i < ncities; i++)
     {
         this->pi.push_back(-1); // initialize pi
     }
 
-    //short int *optPlan = new short int[nitems];
+    // Se inicializa optPlan con 0, tendrá los items del plan optimo
     vector<short int> optPlan;
-    for (int i = 0; i < nitems; ++i)
-    {
-        //optPlan[i] = 0;
+    for (int i = 0; i < nitems; ++i){
         optPlan.push_back(0);
     }
 
@@ -123,15 +122,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     
     // evaluation of function
     eval *evaluate = new eval(ncities, nitems); // Create an eval instance
-    //eval *evalOpt = new eval(ncities, nitems);
     Nodo *optPlan_and_tour = new Nodo(ncities, nitems);
-    
-    cout << "pi -----------------------\n ";
-    /*for (int i = 0; i < ncities; i++)
-    {
-        cout << this->pi[i] << " ";
-    }
-    cout << " -----------------------lal\n\n ";*/
     
     cout << "seg\n";
     // select the best items
@@ -151,18 +142,9 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     optPlan_and_tour = evaluate->evaluateFX(optPlan_and_tour, this->pi, optPlan, ncities, nitems, capacity, distances, time0, time1,profit, items, items_in_city);
     cout << "\nprint all\n";
     //optPlan_and_tour->printAll();
-    
-    
-    cout << "\n optPlan_and_tour\n";
-    //exit(0);
-    
-
-    
-    //exit(0);
     sol->addSolution(optPlan_and_tour); // add to COP
-    //sol->addAll(optPlan_and_tour); // add to all solutions
     
-    //sol->AllSol[0]->printAll();
+    
 
     // Tour óptimo con los mejores items de la última mitad
     Nodo *optTour_lastItems = new Nodo(ncities, nitems);
@@ -186,10 +168,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     //optTour_lastItems->printAll();
     sol->addSolution(optTour_lastItems);
 
-    cout << "pi: size: " << pi.size() << endl;
     
-
-
     // Regresar Z = [0,,,0];
     for (int i = 0; i < nitems; i++)
     {
@@ -203,7 +182,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     {
         for (std::vector<int>::iterator it = items_in_city[pi[i]].begin() ; it != items_in_city[pi[i]].end(); ++it)
         {
-            for (int k = 0; k < optimal_plan.size(); k++){ // checar todos los objetos
+            for (int k = 0; k < optimal_plan_size; k++){ // checar todos los objetos
                 if(*it == optimal_plan[k]){
                     z[*it] = 1;
                     //cout << *it << " ";
@@ -215,17 +194,21 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     cout << "\n\noptTour_firstItems\n";
     //optTour_firstItems->printAll();
     sol->addSolution(optTour_firstItems);
-    
-    //exit(0);
 
-
-   
 
     fill(begin(z),end(z),0);
     Nodo *solution = new Nodo(ncities, nitems); // solution Node (init solution)
     cout << " despues de Nodo \n";
     solution = evaluate->evaluateFX(solution, this->pi, z, ncities, nitems, capacity, distances, time0, time1,profit, items, items_in_city);
-    //solution->printAll();
+    solution->printAll();
+
+
+    /*double p = 66048945;
+    unsigned long p1 = 66048945;
+    cout << "\n " << setprecision(15) << fixed << p << endl;
+    cout << "\n " << p1 << endl;
+    */
+    //exit(0);
     
     
     
@@ -234,7 +217,6 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     cout << "We have the first solution\n";
 
     int counter = 0;
-
 
     //int prob;
     int takeSol;

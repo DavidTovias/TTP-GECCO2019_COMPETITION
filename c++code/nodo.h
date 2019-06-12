@@ -222,7 +222,7 @@ void Nodo::printAll(){
     
     cout << "  Plan:  ";
     this->showPacking();
-    cout << "\tTime: " << this->time << "\tProfit: " << this->profit;
+    cout << "\tTime: " << setprecision(15) << fixed << this->time << "\tProfit: " << this->profit;
     cout << endl;
     
 }

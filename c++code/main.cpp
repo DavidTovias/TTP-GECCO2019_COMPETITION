@@ -9,6 +9,7 @@
 #include <math.h>
 #include <vector>
 #include <climits>
+#include<iomanip>
 
 #define MAXCITIES 33810
 #define MAXITEMS  338090

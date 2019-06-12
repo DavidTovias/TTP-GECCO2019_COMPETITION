@@ -65,9 +65,9 @@ void writeInFile::write_in_file(vector<Nodo*> COP)
     for (int i = 0; i < cop_size; i++)
     {   
         if(i != cop_size-1){
-            tp << COP[i]->time << " " << COP[i]->profit << "\n";
+            tp << setprecision(15) << fixed << COP[i]->time << " " << COP[i]->profit << "\n";
         }else{
-            tp << COP[i]->time << " " << COP[i]->profit;
+            tp << setprecision(15) << fixed << COP[i]->time << " " << COP[i]->profit;
         }
         
     }
