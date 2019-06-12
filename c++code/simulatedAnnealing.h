@@ -427,7 +427,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
         
         t_current *= t_cool;//0.8;// update T
         t_count++;
-        //cout << "T_current: " << t_current << endl;
+        cout << "T_current: " << t_current << endl;
 
 
 
