@@ -1,7 +1,6 @@
 
 //#include <random>
 #include<iostream>
-//#include <boost/random.hpp>
 #include <ctime>
 #include <cstdint>
 #include<iomanip>
@@ -65,9 +64,8 @@ simulatedAnnealing::simulatedAnnealing(int ncities)
     this->beta = 0.333333;
     
     
-    this->t_cool = 0.999; //(this->alpha * pow(ncities,0.5) - 1.0)/(this->alpha * sqrt(ncities));
-    this->t_greedy = 100; //this->beta * ncities;
-    this->t_v = ncities/10;
+    this->t_cool = 0.999; 
+    this->t_greedy = 100; 
 
     this->G = 0;
     
@@ -82,7 +80,7 @@ simulatedAnnealing::~simulatedAnnealing()
 vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* optimal_tour,int ncities, int nitems, int capacity, float *distances, unsigned long **items, vector<vector<int> > items_in_city)
 {    
 
-    // Se inicializa z con -1
+    // Se inicializa z con 0
     for (int i = 0; i < nitems; i++){
         z.push_back(0);
     }
@@ -118,7 +116,8 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     
     
     ////////////////////////////
-    // other solution with optimal tour an optimal plan added to nonDominated set
+    
+    // SOLUCION CON EL TOUR Y PLAN ÓPTIMOS
     
     // evaluation of function
     eval *evaluate = new eval(ncities, nitems); // Create an eval instance
@@ -146,7 +145,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     
     
 
-    // Tour óptimo con los mejores items de la última mitad
+    // TOUR ÓPTIMO CON LOS ITEMS EN LA SEGUNDA MITAD DEL PLAN ÓPTIMO
     Nodo *optTour_lastItems = new Nodo(ncities, nitems);
     
     size_t optimal_plan_size = optimal_plan.size();
@@ -176,7 +175,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     }
     
 
-    // tour óptimo con los mejores items de la primera mitad
+    // TOUR ÓPTIMO CON LOS ITEMS EN LA PRIMERA MITAD DEL PLAN ÓPTIMO
     Nodo *optTour_firstItems = new Nodo(ncities, nitems);
     for (int i = 0; i <= ncities/2; i++)
     {
@@ -190,29 +189,22 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             }
         }
     }
-    evaluate->evaluateFX(optTour_firstItems, this->pi, z, ncities, nitems, capacity, distances, time0, time1,profit, items, items_in_city);
+    optTour_firstItems = evaluate->evaluateFX(optTour_firstItems, this->pi, z, ncities, nitems, capacity, distances, time0, time1,profit, items, items_in_city);
     cout << "\n\noptTour_firstItems\n";
     //optTour_firstItems->printAll();
     sol->addSolution(optTour_firstItems);
 
 
-    fill(begin(z),end(z),0);
+    fill(begin(z),end(z),0); // regresar a z
+
+    // TOUR ÓPTIMO CON NINGÚN ITEM SELECCIONADO (GANANCIA CERO)
     Nodo *solution = new Nodo(ncities, nitems); // solution Node (init solution)
     cout << " despues de Nodo \n";
     solution = evaluate->evaluateFX(solution, this->pi, z, ncities, nitems, capacity, distances, time0, time1,profit, items, items_in_city);
     solution->printAll();
 
-
-    /*double p = 66048945;
-    unsigned long p1 = 66048945;
-    cout << "\n " << setprecision(15) << fixed << p << endl;
-    cout << "\n " << p1 << endl;
-    */
-    //exit(0);
     
-    
-    
-    // ***************** At this point we already have the first solution ******************
+    // ***************** At this point we already have three solution ******************
 
     cout << "We have the first solution\n";
 
@@ -225,22 +217,20 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     Nodo *GreedyBest = new Nodo(ncities, nitems); // greedy solution    
     //Nodo * aux = new Nodo(ncities, nitems);
     int nonD = 0, dominates = 0, dominated = 0, t_count = 0;
-    int BL_Z = 0;
+    
     int BL_CITIES = 2;
-    //int city1, city2, min_city, max_city; 
+    
     vector<unsigned long> peso;
     vector<unsigned long> ganancia;
-    vector<short int> objetos;
+    vector<int> objetos;
     vector<short int> knp;
-    //int metodo = 0;
+    
     unsigned long peso_total = 0;
-    //int c = 0;
+    
     while(t_current > 5.0){ // Temperature  
-        /*if(pi.size() != 280){ 
-            cout << "Diferente a 280! - sa " << endl;
-            exit(0);
-        }*/
+
         peso_total = 0;
+        
         // generate new solution
         mutate = perMutation->rndint(1,10);
         if(mutate <= 9){
@@ -275,7 +265,8 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
                 peso.push_back(items[*it][1]);
                 peso_total += items[*it][1];
 
-                objetos.push_back((short int)*it);
+                objetos.push_back(*it);
+                //cout << "*it" << *it << endl;
             }
 
             if(peso_total > (unsigned long)capacity){  // Se viola la restricción de peso
@@ -290,8 +281,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             }
         
 
-            knp = perMutation->knapsack_dp(peso, ganancia, 2000UL, peso.size());
-            //cout << "\nSIZE KNP: " << knp.size() << endl;
+            knp = perMutation->knapsack_dp(peso, ganancia, 4000UL, peso.size());
             size_t knp_size = knp.size();
             for (int j = 0; j < knp_size; j++)
             {   
@@ -308,8 +298,8 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             
         }
         
-        if(BL_CITIES == 6){ BL_CITIES = 1;}
-        else{ BL_CITIES += 1; }
+        if(BL_CITIES == 6){ BL_CITIES = 2;}
+        else{ BL_CITIES += 2; }
         
         // evaluation of function
         solutionPrime = evaluate->evaluateFX(solutionPrime, this->pi, z, ncities, nitems, capacity, distances, time0, time1,profit, items, items_in_city);
@@ -362,13 +352,9 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             }
             
             if(this->G >= this->t_greedy){
-                //cout << "G is complete! ---------------------------------------------------\n";
-                //exit(0);
-                //prob = (int) perMutation->rndint(0,10); // probability;
-                
+                cout << "G is complete! ---------------------------------------------------\n";
                 
                 p = exp(-1/this->t_current);
-                //cout << "p: " << p << endl;
                 //cout << "t_current: " << t_current << endl;
                 
                 if(p >= 0.5){ // (add greedyBest, let solution = greedySolution)
@@ -387,7 +373,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
                     }
         
         
-                    t_current *= t_cool;//0.8;// update T
+                    t_current *= t_cool;
                     t_count++;
                     continue;
                     
@@ -421,15 +407,10 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             this->pi[i] = solution->tour[i];
         }
         
-        /*if(this->pi.size() != 280){
-            cout << "this->pi Diferente a 280 - Sa\n";
-        }*/
         
         t_current *= t_cool;//0.8;// update T
         t_count++;
         cout << "T_current: " << t_current << endl;
-
-
 
     }
 
@@ -443,7 +424,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     cout << "no. de nodos: " << counter << endl;
 
     cout << endl;
-    ////////////////////////////////8
+    ////////////////////////////////
     
     
     //delete [] this->pi;
@@ -454,14 +435,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     delete perMutation;
     delete evaluate;
 
-    /*cout << "\n All Solutions \n\n";
-    for(int i = 0; i< sol->AllSol.size(); i++){
-        cout << "time: " << sol->AllSol[i]->time << "  profit: " << sol->AllSol[i]->profit << endl;
-    }
 
-    cout << "TOTAL: " << sol->AllSol.size() << endl;
-
-    exit(0);*/
     
     return sol->solutions();
 

@@ -10,6 +10,8 @@
 #include <vector>
 #include <climits>
 #include<iomanip>
+#include<string>
+#include<sstream>
 
 #define MAXCITIES 33810
 #define MAXITEMS  338090
@@ -123,13 +125,34 @@ int main(int argc, char const *argv[])
     */
 
 
-    cout << "\n";
+
     for(int i = 0; i < ParetoOptimal.size(); i++)
     {
         cout << ParetoOptimal[i]->time << " " << ParetoOptimal[i]->profit << endl;
     }
     
+
     
+    /*cout << "\n";
+    int city = 280, item = 279;
+    string sCity, sItem;
+    stringstream ss_city;
+    stringstream ss_item;
+    ss_city << city;
+    sCity = ss_city.str();
+    ss_item << item;
+    sItem = ss_item.str();
+    string c = "TOVIAS_a"+sCity+"_n"+sItem+".f";
+    cout << c << endl;
+
+    int o = 280;
+    string os = to_string(o);
+
+    cout << os << endl;
+    exit(0);
+    */
+
+
     writeInFile *write = new writeInFile(ncities, nitems);
 
     write->write_in_file(ParetoOptimal);

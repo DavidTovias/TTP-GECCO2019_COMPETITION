@@ -32,7 +32,7 @@ writeInFile::~writeInFile()
 void writeInFile::write_in_file(vector<Nodo*> COP)
 {
     size_t cop_size = COP.size();
-    cout << "En write_in_file - solutoins\n";
+    cout << "En write_in_file - solutions\n";
     ofstream fs("solutions.txt",ios::app); // create file (tour and plan)
     for (int i = 0; i < cop_size; i++)
     {
@@ -61,6 +61,9 @@ void writeInFile::write_in_file(vector<Nodo*> COP)
     fs.close(); // close file
     
     cout << "En write_in_file COP\n";
+    //TOVIAS_a280_n279.f
+    
+    
     ofstream tp("COP.txt",ios::app);
     for (int i = 0; i < cop_size; i++)
     {   

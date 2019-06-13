@@ -20,7 +20,6 @@ private:
     int nitems;
     int capacity;
     int *opt_tour;
-    short int **opt_plan;
 
     unsigned long coor_cities[MAXCITIES][2];
     
@@ -90,21 +89,6 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
 
     cout<<"succesfully read! file2"<<endl;
 
-    int k = 0;
-    /*cout << "imprimiendo items\n";
-    for(int i = 0; i < this->nitems; i++)
-    {
-        for(int j = 0; j < 3; j++)
-        {
-            //cout << items[i][j] << " ";
-            k++;
-        }
-        cout << endl;
-    }
-    cout << endl;
-    cout << "K: " << k << endl;
-    */
-
     
     this->distances = (float *) malloc (this->ncities*this->ncities*sizeof(float));
     cout << "Despues de distances\n";
@@ -125,7 +109,7 @@ readFile::readFile(const char *filename, const char *opt_tour, const char *opt_k
     }
     inFile.close();
     
-
+    cout<<"succesfully read! file3"<<endl;
 
     cout << "\nnBestItems: " << nBestItems << endl;
 

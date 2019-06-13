@@ -11,7 +11,6 @@ class Nodo{
     private:
         
     public:
-        Nodo(); // Constructor
         Nodo(int max_cities, int max_items);
         ~Nodo();
         //int* tour;
@@ -19,7 +18,6 @@ class Nodo{
         vector<int> tour;
         vector<int> pi_aux;
         
-        //short int * packing;
         vector<short int> packing;
 
         double time;
@@ -27,37 +25,29 @@ class Nodo{
 
         int ncities;
         int nitems;
-        //Nodo *aux;
         Nodo *aux;
 
         vector<Nodo*> vec;
         int ban = 0;
 
         // Methods
-        //void setTour(int*);
         void setTour(vector<int>);
-
-        //void setPacking(short int*);
         void setPacking(vector<short int>);
 
-        //int* getInverseTour(int*);
         vector<int> getInverseTour(vector<int>);
 
         void showTour();
         void showPacking();
         bool equalsTour(Nodo*);
         bool equalsPacking(Nodo*);
-        // int * getTour();
-        vector<int> getTour();
         
-        //short int * getPacking();
+        vector<int> getTour();
         vector<short int> getPacking();
 
         int compareSolution(Nodo*);
         Nodo * getAll(Nodo *);
         void printAll();
 
-        void initialize();
 };
 
 
@@ -169,17 +159,13 @@ int Nodo::compareSolution(Nodo* n){
 
     if(this->time == n->time && this->profit == n->profit)
     {
-        //cout << "this->time: " << this->time << "  this->profit: " << this->profit << endl;
-        //cout << "n->time: " << this->time << " this->profit: " << this->profit << endl;
         if(this->equalsTour(n)){
             if(this->equalsPacking(n)){
                 return -1;
             }else { 
-                //cout << "\nEntrando a equalsPacking else\n";
                 return 0; 
             }
         }else {
-            //cout << "\nEntrando a equalsTour else\n"; 
             return 0; 
         }
     }
@@ -193,16 +179,11 @@ int Nodo::compareSolution(Nodo* n){
     }
     else
     {
-        //cout << "\nelse final \n";
         return 0;
     }
     
 }
 
-void Nodo::initialize(){
-    this->aux = new Nodo(ncities, nitems);
-    this->ban = 19;
-}
 
 Nodo* Nodo::getAll(Nodo *n){
     Nodo *aux = new Nodo(ncities, nitems);
