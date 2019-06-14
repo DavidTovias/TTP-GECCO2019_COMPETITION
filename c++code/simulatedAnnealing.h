@@ -57,7 +57,7 @@ public:
 //Constructor
 simulatedAnnealing::simulatedAnnealing(int ncities)
 {
-    this->t_start = 500;
+    this->t_start = 300;
     this->t_end = 0.0025;
     this->t_current = this->t_start;
     this->alpha = 1600;
@@ -330,13 +330,14 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             dominated++;
             
             //solution = solution->getAll(solutionPrime);
-            
+            // add solutionPrime
+            sol->addSolution(solutionPrime);
             solution = solutionPrime;
             
             
-            // add solutionPrime
-
-            sol->addSolution(solutionPrime);
+            
+            
+            
             //sol->addAll(solutionPrime);
             this->G = 0;
             counter++;
@@ -349,6 +350,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             {
                 //GreedyBest = GreedyBest->getAll(solutionPrime);
                 GreedyBest = solutionPrime;
+                
             }
             
             if(this->G >= this->t_greedy){
@@ -429,9 +431,12 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     
     //delete [] this->pi;
     //delete [] this->z;
-    //delete solution;
-    //delete solutionPrime;
-    //delete GreedyBest;
+    solution = NULL;
+    solutionPrime = NULL;
+    GreedyBest = NULL;
+    delete solution;
+    delete solutionPrime;
+    delete GreedyBest;
     delete perMutation;
     delete evaluate;
 
