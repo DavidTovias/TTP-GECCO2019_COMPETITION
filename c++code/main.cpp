@@ -70,7 +70,7 @@ int main(int argc, char const *argv[])
     cout << "ncities " << ncities << endl;
     cout << "nitems " << nitems << endl;
     cout << "capacity " << capacity << endl;
-
+    
     vector<vector<int> > items_in_city;
     items_in_city = fileData->getItems_in_city();
 
@@ -101,7 +101,7 @@ int main(int argc, char const *argv[])
     
     vector<Nodo*> ParetoOptimal;
     delete fileData;
-    simulatedAnnealing *sa = new simulatedAnnealing(ncities);
+    simulatedAnnealing *sa = new simulatedAnnealing(ncities, nitems);
     ParetoOptimal = sa->sa_algorithm(optimal_plan, optimal_Tour, ncities, nitems, capacity, distanceMatrix, _items, items_in_city);
     cout << "\n Pareto Optimal - LISTA COMPLETA\n";
     
