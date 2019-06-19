@@ -192,6 +192,9 @@ Nodo* Nodo::getAll(Nodo *n){
     aux->setPacking(n->packing);
     aux->profit = n->profit;
     aux->time = n->time;
+    //aux = n;
+    //n = NULL;
+    //delete n;
 
     return aux;
 }

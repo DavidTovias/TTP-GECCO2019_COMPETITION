@@ -24,7 +24,6 @@ private:
     double tiempo0, tiempo1;
     */
     Nodo* aux;
-    Nodo *n2;
     vector<Nodo*> VEC;
 
 public:
@@ -40,8 +39,7 @@ eval::eval(int ncities, int nitems)
     this->max_speed = 1.0;
     this->min_speed = 0.1;
     this->weight = 0;
-    this->aux = new Nodo(ncities, nitems);
-    this->n2 = new Nodo(ncities, nitems);
+    //this->aux = new Nodo(ncities, nitems);
 }
 
 eval::~eval()
@@ -51,6 +49,7 @@ eval::~eval()
 Nodo* eval::evaluateFX(Nodo* solution,vector<int> pi, vector<short int>z, int ncities, int nitems, int capacity, float *distances, double time0, double time1 ,unsigned long profit, unsigned long **items, vector<vector<int> > items_in_city)
 {
 
+    this->aux = new Nodo(ncities, nitems);
     // the values that are evaluated in this function
     this->weight = 0;
     // attributes in the beginning of the tour
@@ -126,8 +125,10 @@ Nodo* eval::evaluateFX(Nodo* solution,vector<int> pi, vector<short int>z, int nc
     }
 
     //cout << "\n final evaluateFX \n";
-    solution = solution->getAll(aux); 
-    //solution = aux;
+    solution = aux;//solution->getAll(aux); 
+    
+    aux = NULL;
+    delete aux;
 
     return solution;
     

@@ -26,6 +26,7 @@ private:
     double time0;
     double time1;
     unsigned long profit;
+    unsigned long CAPACIDAD; // Capacidad por ciudad
 
     /* SA Parameters */
     double p; // probability
@@ -45,7 +46,7 @@ private:
 public:
 
     //Constructor
-    simulatedAnnealing(int);
+    simulatedAnnealing(int, int);
     ~simulatedAnnealing();
 
     // sa method
@@ -55,9 +56,9 @@ public:
 
 
 //Constructor
-simulatedAnnealing::simulatedAnnealing(int ncities)
+simulatedAnnealing::simulatedAnnealing(int ncities, int nitems)
 {
-    this->t_start = 1000;
+    this->t_start = 300;
     this->t_end = 0.0025;
     this->t_current = this->t_start;
     this->alpha = 1600;
@@ -68,7 +69,45 @@ simulatedAnnealing::simulatedAnnealing(int ncities)
     this->t_greedy = 100; 
 
     this->G = 0;
+
+    switch (nitems)
+    {
+    case 279:
+        CAPACIDAD = 1619UL;
+        break;
+    case 1395:
+        CAPACIDAD = 5035UL;
+        break;
+    case 2790:
+        CAPACIDAD = 7830UL;
+        break;
     
+    case 4460:
+        CAPACIDAD = 1549UL;
+        break;
+    case 22300:
+        CAPACIDAD = 5035UL;
+        break;
+    case 44600:
+        CAPACIDAD = 7870UL;
+        break;
+    
+    case 33809:
+        CAPACIDAD = 1547UL;
+        break;
+    case 169045:
+        CAPACIDAD = 5030UL;
+        break;
+    case 338090:
+        CAPACIDAD = 7890UL;
+        break;
+
+    default:
+        CAPACIDAD = 2000UL;
+        break;
+    }
+
+
 }
 
 simulatedAnnealing::~simulatedAnnealing()
@@ -281,7 +320,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             }
         
 
-            knp = perMutation->knapsack_dp(peso, ganancia, 4000UL, peso.size());
+            knp = perMutation->knapsack_dp(peso, ganancia, CAPACIDAD, peso.size());
             size_t knp_size = knp.size();
             for (int j = 0; j < knp_size; j++)
             {   
