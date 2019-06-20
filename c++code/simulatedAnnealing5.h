@@ -73,39 +73,52 @@ simulatedAnnealing::simulatedAnnealing(int ncities, int nitems)
     switch (nitems)
     {
     case 279:
-        CAPACIDAD = 1619UL;
+        //CAPACIDAD = 1619UL;
+        //CAPACIDAD = 776UL;
+        CAPACIDAD = 1022UL;
         break;
     case 1395:
-        CAPACIDAD = 5035UL;
+        //CAPACIDAD = 5035UL;
+        CAPACIDAD = 1005UL*5UL;
         break;
     case 2790:
-        CAPACIDAD = 7830UL;
+        //CAPACIDAD = 7830UL;
+        CAPACIDAD = 496UL*10UL;
         break;
     
     case 4460:
-        CAPACIDAD = 1549UL;
+        //CAPACIDAD = 1549UL;
+        CAPACIDAD = 740UL;
         break;
     case 22300:
-        CAPACIDAD = 5035UL;
+        //CAPACIDAD = 5035UL;
+        CAPACIDAD = 1005UL*5UL;
         break;
     case 44600:
-        CAPACIDAD = 7870UL;
+        //CAPACIDAD = 7870UL;
+        CAPACIDAD = 499UL*10UL;
         break;
     
     case 33809:
-        CAPACIDAD = 1547UL;
+        //CAPACIDAD = 1547UL;
+        CAPACIDAD = 736UL;
         break;
     case 169045:
-        CAPACIDAD = 5030UL;
+        //CAPACIDAD = 5030UL;
+        CAPACIDAD = 1004UL*5UL;
         break;
     case 338090:
-        CAPACIDAD = 7890UL;
+        //CAPACIDAD = 7890UL;
+        CAPACIDAD = 501UL*10UL;
         break;
 
     default:
+        //CAPACIDAD = 2000UL;
         CAPACIDAD = 2000UL;
         break;
     }
+
+    //CAPACIDAD *= 5UL;
 
 
 }
@@ -320,7 +333,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             }
         
 
-            knp = perMutation->knapsack_dp(peso, ganancia, CAPACIDAD, peso.size());
+            knp = perMutation->knapsack_dp(peso, ganancia, 4000UL, peso.size());
             size_t knp_size = knp.size();
             for (int j = 0; j < knp_size; j++)
             {   
