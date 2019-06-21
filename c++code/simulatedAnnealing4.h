@@ -58,7 +58,7 @@ public:
 //Constructor
 simulatedAnnealing::simulatedAnnealing(int ncities, int nitems)
 {
-    this->t_start = 500;
+    this->t_start = 350;
     this->t_end = 0.0025;
     this->t_current = this->t_start;
     this->alpha = 1600;
