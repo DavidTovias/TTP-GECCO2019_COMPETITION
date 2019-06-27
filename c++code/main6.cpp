@@ -22,7 +22,7 @@
 #include "eval.h"
 #include "permutation.h"
 
-#include "simulatedAnnealing.h"
+#include "simulatedAnnealing_greedy_knp.h"
 #include "writeInFile.h"
 
 using namespace std;

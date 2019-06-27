@@ -31,7 +31,8 @@ public:
     int rndint(int, int);
 
     vector<short int> knapsack_dp(vector<unsigned long>, vector<unsigned long>, unsigned long, int);
-
+    void knp_greedy(vector<unsigned long> &wt, vector<unsigned long> &val, vector<unsigned long> &vec, size_t n, unsigned long W);
+    void quicksort(double *A, vector<unsigned long> &wt, vector<unsigned long> &val, size_t n);
 };
 
 
@@ -44,6 +45,73 @@ permutation::permutation()
 permutation::~permutation()
 {
 }
+
+void permutation::quicksort(double *A, vector<unsigned long> &wt, vector<unsigned long> &val, size_t n)
+{
+    int len = int(n);
+    if (len < 2) return;
+ 
+    double pivot = A[len / 2];
+ 
+    int i, j;
+    for (i = 0, j = len - 1; ; i++, j--) {
+        while (A[i] > pivot) i++;
+        while (A[j] < pivot) j--;
+    
+        if (i >= j) break;
+    
+        double temp = A[i];
+        int tmp_wt = wt[i];
+        int tmp_val = val[i];
+        A[i] = A[j];
+        A[j] = temp;
+        
+        wt[i] = wt[j];
+        wt[j] = tmp_wt;
+        
+        val[i] = val[j];
+        val[j] = tmp_val;
+    }
+ 
+    quicksort(A, wt, val, i);
+    quicksort(A + i, wt, val, len - i);
+}
+
+
+
+void permutation::knp_greedy(vector<unsigned long> &wt, vector<unsigned long> &val, vector<unsigned long> &vec, size_t n, unsigned long W)
+{
+    double *c;
+	c = (double *) malloc(sizeof(double)*(int)n);
+	//cout << "AQUI " << endl;
+	for (int i = 0; i < n; ++i)
+	{
+		c[i] = (double)val[i]/wt[i];
+		//cout << c[i] << " ";
+	}
+    //cout << "AQUI despues" << endl;
+	//cout << endl;
+	quicksort(c,wt,val,n);
+
+	int w = 0, v = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		if(wt[i] + w <= W){
+			vec[i] = 1;
+			w += wt[i];
+			v += val[i];
+		}else{
+            break;
+        }
+	}
+	
+	free(c);
+	//return v;
+}
+
+
+
+
 
 vector<short int> permutation::knapsack_dp(vector<unsigned long> wt, vector<unsigned long> val, unsigned long W, int n)
 {

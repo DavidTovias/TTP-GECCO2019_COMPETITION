@@ -73,7 +73,7 @@ simulatedAnnealing::simulatedAnnealing(int ncities, int nitems)
     switch (nitems)
     {
     case 279:
-        CAPACIDAD = 1619UL;
+        CAPACIDAD = 25000UL;
         break;
     case 1395:
         CAPACIDAD = 5035UL;
@@ -262,7 +262,8 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
     vector<unsigned long> peso;
     vector<unsigned long> ganancia;
     vector<int> objetos;
-    vector<short int> knp;
+    vector<unsigned long> vec;
+    
     
     unsigned long peso_total = 0;
     
@@ -306,37 +307,30 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
 
                 objetos.push_back(*it);
                 //cout << "*it" << *it << endl;
+                vec.push_back(0);
             }
-
-            if(peso_total > (unsigned long)capacity){  // Se viola la restricción de peso
-                
-                peso_total = 0;
-                // Se eliminan todos los elementos
-                peso.clear();
-                ganancia.clear();
-                objetos.clear();
-                knp.clear();
-                break; 
-            }
-        
-
-            knp = perMutation->knapsack_dp(peso, ganancia, CAPACIDAD, peso.size());
-            size_t knp_size = knp.size();
-            for (int j = 0; j < knp_size; j++)
-            {   
-                if(knp[j] == 1){
-                    z[objetos[j]] = (short int)1;
-                }
-            }
-            
-            // Se eliminan todos los elementos
-            peso.clear();
-            ganancia.clear();
-            objetos.clear();
-            knp.clear();
             
         }
+
+        size_t vec_size = vec.size();
+        perMutation->knp_greedy(peso, ganancia, vec, peso.size(), capacity);
+        //size_t vec_size = vec.size();
+        //cout << "vec_size: " << vec_size << endl;
         
+        for (int j = 0; j < vec_size; j++)
+        {   
+            if(vec[j] == 1){
+                z[objetos[j]] = (short int)1;
+            }
+        }
+        
+        // Se eliminan todos los elementos
+        peso.clear();
+        ganancia.clear();
+        objetos.clear();
+        vec.clear();
+        
+
         if(BL_CITIES == 6){ BL_CITIES = 2;}
         else{ BL_CITIES += 2; }
         
