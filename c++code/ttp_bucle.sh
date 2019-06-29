@@ -39,8 +39,8 @@ plan338090=optPlan_33810-338090_clean.txt
 
 
 # Una vez las instancias mas grandes
-./ttp7_1 $instancia7 $opt33810 $plan33809
-./ttp8_1 $instancia8 $opt33810 $plan169045
+#./ttp7_1 $instancia7 $opt33810 $plan33809
+#./ttp8_1 $instancia8 $opt33810 $plan169045
 ./ttp9_1 $instancia9 $opt33810 $plan338090
 
 i=0
