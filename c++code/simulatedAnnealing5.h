@@ -58,7 +58,7 @@ public:
 //Constructor
 simulatedAnnealing::simulatedAnnealing(int ncities, int nitems)
 {
-    this->t_start = 350;
+    this->t_start = 100;
     this->t_end = 0.0025;
     this->t_current = this->t_start;
     this->alpha = 1600;
@@ -333,7 +333,7 @@ vector<Nodo*> simulatedAnnealing::sa_algorithm(vector<int> optimal_plan, int* op
             }
         
 
-            knp = perMutation->knapsack_dp(peso, ganancia, 4000UL, peso.size());
+            knp = perMutation->knapsack_dp(peso, ganancia, CAPACIDAD, peso.size());
             size_t knp_size = knp.size();
             for (int j = 0; j < knp_size; j++)
             {   
